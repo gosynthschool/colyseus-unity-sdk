@@ -1,6 +1,6 @@
 # Synthesis Fork of Colyseus-Unity-SDK
 
-**When updating this fork, in order to make your changes bubble up to games consuming this package, you must do the following in each:**
+**When updating this fork, in order to make your changes bubble up to games consuming this package, you must do the following in each game:**
 
 1. In the `manifest.json` file, remove the line for this package `"com.gosynthschool.io.colyseus.sdk": "https://github.com/gosynthschool/colyseus-unity-sdk.git#synthesis-changes",`.
 2. Give the Unity Editor focus and let it refresh packages.
