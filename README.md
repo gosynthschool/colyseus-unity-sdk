@@ -6,4 +6,4 @@
 2. Give the Unity Editor focus and let it refresh packages.
 3. In the `manifest.json` file, add the line you removed for this package in step 1 back.
 4. Give Unity Editor focus and let it refresh packages.
-5. You should see the `client/` `packages-lock.json` file has updated with a new commit hash for this package.
+5. You should see the `client/simName/Packages/packages-lock.json` file has updated with a new commit hash for this package.
