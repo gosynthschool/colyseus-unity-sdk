@@ -128,7 +128,7 @@ namespace Colyseus
                          LSLog.LogError($"Failed to make request to {req.url}, trying again!");
                          try
                          {
-	                         return await Request(uriMethod, uriPath, uriQuery, Token, data);
+	                         return await Request(uriMethod, uriPath, options, headers);
                          }
                          catch
                          {
