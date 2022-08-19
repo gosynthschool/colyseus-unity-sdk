@@ -59,7 +59,7 @@ namespace Colyseus
                     if (_serverSettings.useSecureProtocol)
                     {
                          //We failed to make this call with a secure protocol, try again
-                         LSLog.LogError($"Failed to make request to {req.url} with secure protocol, trying again!");
+                         LSLog.LogError($"Failed to make request to {req.url}, trying again!");
                          try
                          {
 	                         return await Request(uriMethod, uriPath, uriQuery, Token, data);
@@ -124,10 +124,16 @@ namespace Colyseus
                 {
                     if (_serverSettings.useSecureProtocol)
                     {
-                        //We failed to make this call with a secure protocol, try with non-secure and if that works we'll stick with it
-                        _serverSettings.useSecureProtocol = false;
-                        LSLog.LogError($"Failed to make request to {req.url} with secure protocol, trying again without!");
-                        return await Request(uriMethod, uriPath, options, headers);
+                        //We failed to make this call with a secure protocol, try again
+                         LSLog.LogError($"Failed to make request to {req.url}, trying again!");
+                         try
+                         {
+	                         return await Request(uriMethod, uriPath, uriQuery, Token, data);
+                         }
+                         catch
+                         {
+	                         LSLog.LogError($"Failed RETRY to make request to {req.url}.");
+                         }
                     }
                     else
                     {
