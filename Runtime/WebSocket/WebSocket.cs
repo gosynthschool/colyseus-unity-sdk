@@ -258,7 +258,7 @@ namespace NativeWebSocket
     }
 
     public void CancelConnection () {
-        Debug.Log('WebSocket.CancelConnection()');
+        Debug.Log("WebSocket.CancelConnection()");
         if (State == WebSocketState.Open)
             Close (WebSocketCloseCode.Abnormal);
     }
