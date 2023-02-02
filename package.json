@@ -1,6 +1,6 @@
 {
     "name": "com.gosynthschool.io.colyseus.sdk",
-    "version": "0.14.21-synthesis-changes",
+    "version": "0.14.22-synthesis-changes",
     "displayName": "Colyseus SDK - Synthesis",
     "description": "Colyseus Multiplayer SDK for Unity - Synthesis",
     "unity": "2019.1",

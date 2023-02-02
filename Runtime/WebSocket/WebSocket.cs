@@ -324,8 +324,8 @@ namespace NativeWebSocket
         this.OnMessage?.Invoke (data);
     }
 
-    public void DelegateOnErrorEvent (string errorMsg) {
-        this.OnError?.Invoke (errorMsg);
+    public void DelegateOnErrorEvent (int code, string errorMsg) {
+        this.OnError?.Invoke (code, errorMsg);
     }
 
     public void DelegateOnCloseEvent (int closeCode) {
@@ -746,7 +746,7 @@ namespace NativeWebSocket
       if (instances.TryGetValue (instanceId, out instanceRef)) {
 
         string errorMsg = Marshal.PtrToStringAuto (errorPtr);
-        instanceRef.DelegateOnErrorEvent (errorMsg);
+        instanceRef.DelegateOnErrorEvent (0, errorMsg);
 
       }
 
