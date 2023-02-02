@@ -157,7 +157,7 @@ namespace Colyseus
             {
                 if (consented)
                 {
-                    await colyseusConnection.Send(new[] {ColyseusProtocol.LEAVE_ROOM});
+                    await colyseusConnection.Send(new[] { ColyseusProtocol.LEAVE_ROOM });
                 }
                 else
                 {
@@ -195,10 +195,7 @@ namespace Colyseus
 
             this.colyseusConnection.OnClose += code => OnLeave?.Invoke(code);
 
-            // TODO: expose WebSocket error code!
-            // Connection.OnError += (code, message) => OnError?.Invoke(code, message);
-
-            this.colyseusConnection.OnError += message => OnError?.Invoke(0, message);
+            this.colyseusConnection.OnError += (code, message) => OnError?.Invoke(code, message);
             this.colyseusConnection.OnMessage += bytes => ParseMessage(bytes);
         }
 
@@ -221,7 +218,7 @@ namespace Colyseus
         /// <param name="type">Message type</param>
         public async Task Send(byte type)
         {
-            await colyseusConnection.Send(new[] {ColyseusProtocol.ROOM_DATA, type});
+            await colyseusConnection.Send(new[] { ColyseusProtocol.ROOM_DATA, type });
         }
 
         /// <summary>
@@ -234,7 +231,7 @@ namespace Colyseus
             MemoryStream serializationOutput = new MemoryStream();
             MsgPack.Serialize(message, serializationOutput, SerializationOptions.SuppressTypeInformation);
 
-            byte[] initialBytes = {ColyseusProtocol.ROOM_DATA, type};
+            byte[] initialBytes = { ColyseusProtocol.ROOM_DATA, type };
             byte[] encodedMessage = serializationOutput.ToArray();
 
             byte[] bytes = new byte[initialBytes.Length + encodedMessage.Length];
@@ -360,7 +357,7 @@ namespace Colyseus
                 {
                     try
                     {
-                        serializer = (IColyseusSerializer<T>) new ColyseusNoneSerializer();
+                        serializer = (IColyseusSerializer<T>)new ColyseusNoneSerializer();
                     }
                     catch (Exception e)
                     {
@@ -372,36 +369,37 @@ namespace Colyseus
 
                 if (bytes.Length > offset)
                 {
-	                try {
-		                serializer.Handshake(bytes, offset);
-	                }
-	                catch (Exception e)
-	                {
-		                await Leave(false);
-		                OnError?.Invoke(ColyseusErrorCode.SCHEMA_MISMATCH, e.Message);
-		                return;
-	                }
+                    try
+                    {
+                        serializer.Handshake(bytes, offset);
+                    }
+                    catch (Exception e)
+                    {
+                        await Leave(false);
+                        OnError?.Invoke(ColyseusErrorCode.SCHEMA_MISMATCH, e.Message);
+                        return;
+                    }
                 }
 
                 OnJoin?.Invoke();
 
                 // Acknowledge JOIN_ROOM
-                await colyseusConnection.Send(new[] {ColyseusProtocol.JOIN_ROOM});
+                await colyseusConnection.Send(new[] { ColyseusProtocol.JOIN_ROOM });
             }
             else if (code == ColyseusProtocol.ERROR)
             {
-                Iterator it = new Iterator {Offset = 1};
+                Iterator it = new Iterator { Offset = 1 };
                 float errorCode = Decode.DecodeNumber(bytes, it);
                 string errorMessage = Decode.DecodeString(bytes, it);
-                OnError?.Invoke((int) errorCode, errorMessage);
+                OnError?.Invoke((int)errorCode, errorMessage);
             }
             else if (code == ColyseusProtocol.ROOM_DATA_SCHEMA)
             {
-                Iterator it = new Iterator {Offset = 1};
+                Iterator it = new Iterator { Offset = 1 };
                 float typeId = Decode.DecodeNumber(bytes, it);
 
                 Type messageType = ColyseusContext.GetInstance().Get(typeId);
-                Schema.Schema message = (Schema.Schema) Activator.CreateInstance(messageType);
+                Schema.Schema message = (Schema.Schema)Activator.CreateInstance(messageType);
 
                 message.Decode(bytes, it);
 
@@ -423,7 +421,7 @@ namespace Colyseus
             }
             else if (code == ColyseusProtocol.ROOM_STATE)
             {
-	            SetState(bytes, 1);
+                SetState(bytes, 1);
             }
             else if (code == ColyseusProtocol.ROOM_STATE_PATCH)
             {
@@ -434,7 +432,7 @@ namespace Colyseus
                 IColyseusMessageHandler handler = null;
                 object type;
 
-                Iterator it = new Iterator {Offset = 1};
+                Iterator it = new Iterator { Offset = 1 };
 
                 if (Decode.NumberCheck(bytes, it))
                 {
