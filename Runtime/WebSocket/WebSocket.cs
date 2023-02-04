@@ -83,7 +83,7 @@ namespace NativeWebSocket
 {
     public delegate void WebSocketOpenEventHandler();
     public delegate void WebSocketMessageEventHandler(byte[] data);
-    public delegate void WebSocketErrorEventHandler(int closeCode, string errorMsg);
+    public delegate void WebSocketErrorEventHandler(string errorMsg);
     public delegate void WebSocketCloseEventHandler(int closeCode);
 
     public enum WebSocketCloseCode
@@ -258,7 +258,6 @@ namespace NativeWebSocket
     }
 
     public void CancelConnection () {
-        Debug.Log("WebSocket.CancelConnection()");
         if (State == WebSocketState.Open)
             Close (WebSocketCloseCode.Abnormal);
     }
@@ -324,8 +323,8 @@ namespace NativeWebSocket
         this.OnMessage?.Invoke (data);
     }
 
-    public void DelegateOnErrorEvent (int code, string errorMsg) {
-        this.OnError?.Invoke (code, errorMsg);
+    public void DelegateOnErrorEvent (string errorMsg) {
+        this.OnError?.Invoke (errorMsg);
     }
 
     public void DelegateOnCloseEvent (int closeCode) {
@@ -401,7 +400,7 @@ namespace NativeWebSocket
             }
             catch (Exception ex)
             {
-                OnError?.Invoke((int)WebSocketCloseCode.Abnormal, "Excpetion in Websocket Connect!\n" + ex.Message);
+                OnError?.Invoke(ex.Message);
                 OnClose?.Invoke((int)WebSocketCloseCode.Abnormal);
             }
             finally
@@ -568,7 +567,6 @@ namespace NativeWebSocket
         {
             int closeCode = (int)WebSocketCloseCode.Abnormal;
             await new WaitForBackgroundThread();
-            string errorMessage = null;
 
             ArraySegment<byte> buffer = new ArraySegment<byte>(new byte[8192]);
             try
@@ -611,26 +609,19 @@ namespace NativeWebSocket
                         else if (result.MessageType == WebSocketMessageType.Close)
                         {
                             await Close();
-                            errorMessage = "Closing connection normally with code " + result.CloseStatus;
-
                             closeCode = (int)result.CloseStatus;
                             break;
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 m_TokenSource.Cancel();
-                errorMessage = "Exception encountered in websocket! " + ex.Message;
             }
             finally
             {
                 await new WaitForUpdate();
-                if (errorMessage != null)
-                {
-                    OnError?.Invoke(closeCode, errorMessage);
-                }
                 OnClose?.Invoke(closeCode);
             }
         }
@@ -746,7 +737,7 @@ namespace NativeWebSocket
       if (instances.TryGetValue (instanceId, out instanceRef)) {
 
         string errorMsg = Marshal.PtrToStringAuto (errorPtr);
-        instanceRef.DelegateOnErrorEvent (0, errorMsg);
+        instanceRef.DelegateOnErrorEvent (errorMsg);
 
       }
 

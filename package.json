@@ -1,36 +1,36 @@
 {
-    "name": "com.gosynthschool.io.colyseus.sdk",
-    "version": "0.14.22-synthesis-changes",
-    "displayName": "Colyseus SDK - Synthesis",
-    "description": "Colyseus Multiplayer SDK for Unity - Synthesis",
-    "unity": "2019.1",
-    "license": "MIT",
-    "category": "Networking",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/gosynthschool/colyseus-unity-sdk.git"
-    },
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/@gosynthschool"
-    },
-    "author": {
-        "name": "Colyseus",
-        "email": "contact@lucidsight.com",
-        "url": "https://colyseus.io/"
-    },
-    "keywords": [
-        "colyseus",
-        "multiplayer",
-        "networking",
-        "authoritative",
-        "netcode"
-    ],
-    "dependencies": {},
-    "samples": [
-        {
-            "displayName": "Example",
-            "description": "Colyseus Example",
-            "path": "Runtime/Example~"
-        }
-    ]
+	"name": "com.gosynthschool.io.colyseus.sdk",
+	"version": "0.14.18",
+	"displayName": "Colyseus SDK - Synthesis",
+	"description": "Colyseus Multiplayer SDK for Unity - Synthesis",
+	"unity": "2019.1",
+	"license": "MIT",
+	"category": "Networking",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/gosynthschool/colyseus-unity-sdk.git"
+	},
+	"publishConfig": {
+		"registry":"https://npm.pkg.github.com/@gosynthschool"
+	},
+	"author": {
+		"name": "Colyseus",
+		"email": "contact@lucidsight.com",
+		"url": "https://colyseus.io/"
+	},
+	"keywords": [
+		"colyseus",
+		"multiplayer",
+		"networking",
+		"authoritative",
+		"netcode"
+	],
+	"dependencies": {},
+	"samples": [
+		{
+			"displayName": "Example",
+			"description": "Colyseus Example",
+			"path": "Runtime/Example~"
+		}
+	]
 }
