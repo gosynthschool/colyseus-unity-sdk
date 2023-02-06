@@ -1,6 +1,6 @@
 {
 	"name": "com.gosynthschool.io.colyseus.sdk",
-	"version": "0.14.18",
+	"version": "0.14.23-synthesis-changes",
 	"displayName": "Colyseus SDK - Synthesis",
 	"description": "Colyseus Multiplayer SDK for Unity - Synthesis",
 	"unity": "2019.1",
@@ -11,7 +11,7 @@
 		"url": "https://github.com/gosynthschool/colyseus-unity-sdk.git"
 	},
 	"publishConfig": {
-		"registry":"https://npm.pkg.github.com/@gosynthschool"
+		"registry": "https://npm.pkg.github.com/@gosynthschool"
 	},
 	"author": {
 		"name": "Colyseus",
