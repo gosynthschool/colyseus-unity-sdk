@@ -1,14 +1,17 @@
 {
-	"name": "io.colyseus.sdk",
-	"version": "0.14.18",
-	"displayName": "Colyseus SDK",
-	"description": "Colyseus Multiplayer SDK for Unity",
+	"name": "com.gosynthschool.io.colyseus.sdk",
+	"version": "0.14.23-synthesis-changes",
+	"displayName": "Colyseus SDK - Synthesis",
+	"description": "Colyseus Multiplayer SDK for Unity - Synthesis",
 	"unity": "2019.1",
 	"license": "MIT",
 	"category": "Networking",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/colyseus/colyseus-unity-sdk.git"
+		"url": "https://github.com/gosynthschool/colyseus-unity-sdk.git"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/@gosynthschool"
 	},
 	"author": {
 		"name": "Colyseus",

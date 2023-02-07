@@ -35,17 +35,17 @@ namespace Colyseus
                 {
                     req.uploadHandler = data;
                 }
-        
+
                 foreach (KeyValuePair<string, string> pair in _serverSettings.HeadersDictionary)
                 {
                     req.SetRequestHeader(pair.Key, pair.Value);
                 }
-        
+
                 if (!string.IsNullOrEmpty(Token))
                 {
                     req.SetRequestHeader("Authorization", "Bearer " + Token);
                 }
-        
+
                 // req.uploadHandler = new UploadHandlerRaw(bytes);
                 req.downloadHandler = new DownloadHandlerBuffer();
                 await req.SendWebRequest();
@@ -58,19 +58,17 @@ namespace Colyseus
                 {
                     if (_serverSettings.useSecureProtocol)
                     {
-                         //We failed to make this call with a secure protocol, try with non-secure and if that works we'll stick with it
-                         _serverSettings.useSecureProtocol = false;
-                         LSLog.LogError($"Failed to make request to {req.url} with secure protocol, trying again without!");
-                         return await Request(uriMethod, uriPath, uriQuery, Token, data);
+                         //We failed to make this call with a secure protocol
+                         LSLog.LogError($"Failed to make request to {req.url}.");
                     }
                     else
                     {
                         throw new Exception(req.error);
                     }
                 }
-            
+
                 string json = req.downloadHandler.text;
-            
+
                 return json;
             } ;
         }
@@ -87,18 +85,18 @@ namespace Colyseus
                     // Send JSON options on request body
                     MemoryStream jsonBodyStream = new MemoryStream();
                     Json.Serialize(options, jsonBodyStream); //TODO: Replace GameDevWare serialization
-                    
+
                     req.uploadHandler = new UploadHandlerRaw(jsonBodyStream.ToArray())
                     {
                         contentType = "application/json"
                     };
                 }
-                
+
                 foreach (KeyValuePair<string, string> pair in _serverSettings.HeadersDictionary)
                 {
                     req.SetRequestHeader(pair.Key, pair.Value);
                 }
-                
+
                 if (headers != null)
                 {
                     foreach (KeyValuePair<string, string> header in headers)
@@ -106,7 +104,7 @@ namespace Colyseus
                         req.SetRequestHeader(header.Key, header.Value);
                     }
                 }
-                
+
                 req.downloadHandler = new DownloadHandlerBuffer();
                 await req.SendWebRequest();
 
@@ -118,17 +116,15 @@ namespace Colyseus
                 {
                     if (_serverSettings.useSecureProtocol)
                     {
-                        //We failed to make this call with a secure protocol, try with non-secure and if that works we'll stick with it
-                        _serverSettings.useSecureProtocol = false;
-                        LSLog.LogError($"Failed to make request to {req.url} with secure protocol, trying again without!");
-                        return await Request(uriMethod, uriPath, options, headers);
+                        //We failed to make this call with a secure protocol
+                         LSLog.LogError($"Failed to make request to {req.url}.");
                     }
                     else
                     {
                         throw new Exception(req.error);
                     }
                 }
-                
+
                 return req.downloadHandler.text;
             };
         }

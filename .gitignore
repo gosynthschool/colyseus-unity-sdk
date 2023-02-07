@@ -3,6 +3,7 @@
 *.usertasks
 .DS_Store
 .vs/
+.idea/
 
 #Mono Project Files
 *.pidb
